@@ -44,29 +44,92 @@
         <div class="modal-dialog" role="document">
           <div class="modal-content">
             <div class="modal-header">
-              <h5 class="modal-title" id="subscribeModalLabel">Want a heads-up when we launch?:</h5>
+              <h5 class="modal-title" id="subscribeModalLabel">Want a heads-up when we launch?</h5>
               <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
             <div class="modal-body">
-              <form>
+              <form action="https://formspree.io/f/xqaqaqdr" method="POST">
+                <!-- Name Field -->
                 <div class="form-group">
-                  <label for="recipient-name" class="form-control-label">Pop your email in below — we'll make sure you don't miss a thing.</label>
-                  <input type="text" class="form-control" id="recipient-name" placeholder="your-name@example.com">
+                  <label for="user-name" class="form-control-label">Your Name *</label>
+                  <input type="text" name="name" class="form-control" id="user-name" placeholder="Bruce Wayne" required>
+                </div>
+                
+                <!-- Email Field -->
+                <div class="form-group">
+                  <label for="recipient-email" class="form-control-label">Email *</label>
+                  <input type="email" name="email" class="form-control" id="recipient-email" placeholder="batman@email.com" required>
+                </div>
+                
+                <!-- Phone Field (Optional) -->
+                <div class="form-group">
+                  <label for="user-phone" class="form-control-label">Phone (Optional)</label>
+                  <input type="tel" name="phone" class="form-control" id="user-phone" placeholder="(123) 456-7890">
+                  <small class="text-muted">By sharing your number, you agree we may call you (No spam, promise!)</small>
+                </div>
+                
+                <!-- Hidden Fields -->
+                <input type="hidden" name="_subject" value="New subscriber from Sabrion Solutions">
+                <input type="text" name="_gotcha" style="display:none">
+                
+                <!-- Status Messages -->
+                <div class="form-status mt-3" style="display:none">
+                  <div class="alert alert-success" style="display:none">Thanks! We'll be in touch soon.</div>
+                  <div class="alert alert-danger" style="display:none">Oops! Please check your entries.</div>
+                </div>
+                
+                <div class="modal-footer">
+                  <button type="submit" class="btn btn-default">Get Notified</button>
                 </div>
               </form>
             </div>
-            <div class="modal-footer">
-              <button type="button" class="btn btn-default">Subscribe</button>
-            </div>
           </div>
         </div>
-    </div>
-  </div>
-</div>
+      </div>
     <script src="scripts/jquery.slim.min.js?ver=1.2.0"></script>
     <script src="scripts/bootstrap.bundle.min.js?ver=1.2.0"></script>
     <script src="scripts/main.js?ver=1.2.0"></script>
+    <script>
+      // Handle form submission
+  document.querySelector("#subscribeModal form").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const form = e.target;
+    const submitBtn = form.querySelector("button[type='submit']");
+    const statusDiv = form.querySelector(".form-status");
+    const successMsg = statusDiv.querySelector(".alert-success");
+    const errorMsg = statusDiv.querySelector(".alert-danger");
+    
+    // Reset messages
+    successMsg.style.display = "none";
+    errorMsg.style.display = "none";
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Sending...";
+    
+    fetch(form.action, {
+      method: "POST",
+      body: new FormData(form),
+      headers: { "Accept": "application/json" }
+    })
+    .then(response => {
+      statusDiv.style.display = "block";
+      if (response.ok) {
+        successMsg.style.display = "block";
+        form.reset();
+      } else {
+        errorMsg.style.display = "block";
+      }
+    })
+    .catch(error => {
+      statusDiv.style.display = "block";
+      errorMsg.style.display = "block";
+    })
+    .finally(() => {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Get Notified";
+    });
+  });
+</script>
   </body>
 </html>
