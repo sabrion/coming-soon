@@ -21,12 +21,6 @@
       <div class="masthead clearfix">
         <div class="inner">
           <h3 class="masthead-brand">Thanks for stopping by...you're early (but we like that)!❣️</h3>
-          <nav class="nav nav-masthead">
-            <a class="nav-link nav-social" href="https://www.facebook.com/SabrionSolutions" title="Facebook"><i class="fab fa-facebook-f" aria-hidden="true"></i></a>
-            <a class="nav-link nav-social" href="https://www.instagram.com/sabrionsolutions" title="Instagram"><i class="fab fa-instagram" aria-hidden="true"></i></a>
-            <a class="nav-link nav-social" href="https://www.linkedin.com/company/sabrion" title="LinkedIn"><i class="fab fa-linkedin-in" aria-hidden="true"></i></a>
-
-          </nav>
         </div>
       </div>      
       <div class="inner cover">
@@ -34,6 +28,13 @@
         <h1 class="cover-heading">We're not just launching a company — we're igniting a movement.</h1>
         <p class="lead cover-copy">Small businesses deserve big digital wins.</p>
         <p class="lead"><button type="button" class="btn btn-lg btn-default btn-notify" data-toggle="modal" data-target="#subscribeModal">START RIGHT, RIGHT HERE!</button></p>
+        
+        <!-- Social Links Moved Here -->
+        <div class="social-links" style="margin-top: 30px;">
+          <a href="https://www.facebook.com/SabrionSolutions" title="Facebook" style="color: white; font-size: 24px; margin: 0 10px;"><i class="fab fa-facebook-f"></i></a>
+          <a href="https://www.instagram.com/sabrionsolutions" title="Instagram" style="color: white; font-size: 24px; margin: 0 10px;"><i class="fab fa-instagram"></i></a>
+          <a href="https://www.linkedin.com/company/sabrion" title="LinkedIn" style="color: white; font-size: 24px; margin: 0 10px;"><i class="fab fa-linkedin-in"></i></a>
+        </div>
       </div>
       <div class="mastfoot">
         <div class="inner">
@@ -93,43 +94,43 @@
     <script src="scripts/main.js?ver=1.2.0"></script>
     <script>
       // Handle form submission
-  document.querySelector("#subscribeModal form").addEventListener("submit", function(e) {
-    e.preventDefault();
-    const form = e.target;
-    const submitBtn = form.querySelector("button[type='submit']");
-    const statusDiv = form.querySelector(".form-status");
-    const successMsg = statusDiv.querySelector(".alert-success");
-    const errorMsg = statusDiv.querySelector(".alert-danger");
-    
-    // Reset messages
-    successMsg.style.display = "none";
-    errorMsg.style.display = "none";
-    submitBtn.disabled = true;
-    submitBtn.textContent = "Sending...";
-    
-    fetch(form.action, {
-      method: "POST",
-      body: new FormData(form),
-      headers: { "Accept": "application/json" }
-    })
-    .then(response => {
-      statusDiv.style.display = "block";
-      if (response.ok) {
-        successMsg.style.display = "block";
-        form.reset();
-      } else {
-        errorMsg.style.display = "block";
-      }
-    })
-    .catch(error => {
-      statusDiv.style.display = "block";
-      errorMsg.style.display = "block";
-    })
-    .finally(() => {
-      submitBtn.disabled = false;
-      submitBtn.textContent = "Get Notified";
-    });
-  });
-</script>
+      document.querySelector("#subscribeModal form").addEventListener("submit", function(e) {
+        e.preventDefault();
+        const form = e.target;
+        const submitBtn = form.querySelector("button[type='submit']");
+        const statusDiv = form.querySelector(".form-status");
+        const successMsg = statusDiv.querySelector(".alert-success");
+        const errorMsg = statusDiv.querySelector(".alert-danger");
+        
+        // Reset messages
+        successMsg.style.display = "none";
+        errorMsg.style.display = "none";
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Sending...";
+        
+        fetch(form.action, {
+          method: "POST",
+          body: new FormData(form),
+          headers: { "Accept": "application/json" }
+        })
+        .then(response => {
+          statusDiv.style.display = "block";
+          if (response.ok) {
+            successMsg.style.display = "block";
+            form.reset();
+          } else {
+            errorMsg.style.display = "block";
+          }
+        })
+        .catch(error => {
+          statusDiv.style.display = "block";
+          errorMsg.style.display = "block";
+        })
+        .finally(() => {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Get Notified";
+        });
+      });
+    </script>
   </body>
 </html>
